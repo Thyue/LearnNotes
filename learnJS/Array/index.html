@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="js/highlight.min.js"></script>
+  <link href="css/highlight.min.css" rel="stylesheet">
+  <script>hljs.initHighlightingOnLoad();</script>
+  <link rel="icon" type="image/png" href="src/img/book.png" />
+  <title>學習筆記：Array陣列</title>
+</head>
+
+<body>
+  <h1 style="display: inline-block;margin-top: 5px;margin-bottom: 5px;">學習筆記：Array陣列</h1>
+  <div style="display: inline-block;float: right;">
+    <p style="margin-top: 28px;margin-bottom: 0px;font-size: 12px;">學生：蔡華岳</p>
+    <p style="margin: 0px;font-size: 12px;">更新時間：2018年12月09日14:10</p>
+  </div>
+
+  <hr>
+  <h2>一、賦值</h2>
+  <h3>1、創建空陣列方法</h3>
+  <pre><code class="javascript">
+  var AA = new Array();      //AA = []
+  var BB = Array();          //BB = []
+  var CC = [];               //CC = []
+  </code></pre>
+  <h3>2、創建有5個元素之陣列方法</h3>
+  <pre><code class="javascript">
+  let AA = new Array(5);     //AA = [,,,,]
+  let BB = Array(5);         //BB = [,,,,]
+  let CC = [,,,,];           //CC = [,,,,]
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  </code></pre>
+  <h3>3、new Array()</h3>
+  <h4>它很少被使用，因為方括號 [] 更短更簡潔。而且這種語法還存在一些詭異的特性。</h4>
+  <h4>如果調用 new Array 使用的是一個單獨的數字作為參數，那麼就會創建一個指定了長度，卻沒有任何項的數組，new Array(number) 所有的元素都是 undefined。</h4>
+  <pre><code class="javascript">
+  let AA = new Array(2);     // 會創建一個陣列 [2] 嗎？
+  AA[0];                     //undefined
+  AA.length;                 //2
+  </code></pre>
+  <h3>4、陣列內也可以放置不同型態的資料</h3>
+  <pre><code class="javascript">
+  let sam = ['Sam', 28, 'teacher', true];
+  </code></pre>
+  <h3>5、多維陣列</h3>
+  <h4>陣列裡的項也可以是陣列。我們可以以多維陣列的方式存儲矩陣：</h4>
+  <pre><code class="javascript">
+  let matrix = [
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9]
+  ];
+  matrix[1][1];              // 5
+  </code></pre>
+  <h2>二、觀看陣列內部的值</h2>
+  <h3>1、利用中括號：[]，透過索引index取得陣列項目</h3>
+  <h4>從0開始為第1個元素編號</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  AA = names[0]              //AA = John
+  BB = names[1]              //BB = Sam
+  CC = names[2]              //CC = Bob
+  </code></pre>
+  <h3>2、查詢陣列</h3>
+  <h4>1、從頭部開始搜尋指定元素：indexOf</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  //從第一個索引開始尋找指定元素
+  names.indexOf('Kelly', 0);      //回傳值(所在的索引index)：3
+  //也可以省略form值，從頭部開始搜尋
+  names.indexOf('Perry');      //若找不到則回傳：-1
+  </code></pre>
+  <h4>2、從尾部開始搜尋指定元素：lastIndexOf</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  //從第一個索引開始尋找指定元素
+  names.lastIndexOf('Kelly', 0);      //回傳值(所在的索引index)：3
+  //也可以省略form值，從頭部開始搜尋
+  names.indexOf('Perry');      //若找不到則回傳：-1
+  </code></pre>
+  <h4>3、搜尋指定元素回傳布林值：includes</h4>
+  <h5>如果不想知道索引，這個方法是首選。</h5>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  //從第一個索引開始尋找指定元素
+  names.includes('Kelly', 0);      //回傳值：true
+  //也可以省略form值，從頭部開始搜尋
+  names.includes('Perry');      //若找不到則回傳：false
+  </code></pre>
+  <h3>3、陣列元素長度</h3>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  names.length;              //回傳值：5
+  </code></pre>
+  <h4>(1)清除陣列長度：</h4>
+  <pre><code class="javascript">
+  let AA = [1, 2, 3, 4, 5];
+  AA.length = 2;             //AA = [1, 2]
+  AA.length = 0;             //AA = []
+  </code></pre>
+  <h4>(2)增加陣列長度：</h4>
+  <pre><code class="javascript">
+  let AA = [];
+  AA.length = 5;             //AA = [,,,,]    
+  </code></pre>
+  <h2>三、資料處理(新增、刪除、比對、過濾、操作)</h2>
+  <h3>1、push</h3>
+  <h4>在陣列最後增加一個元素</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob'];
+  names.push('Tom')          //names = ['John', 'Sam', 'Bob', 'Tom']
+  </code></pre>
+  <h3>2、pop</h3>
+  <h4>在陣列最後取出一個元素</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob'];
+  names.pop()          //names = ['John', 'Sam']
+  </code></pre>
+  <h3>3、shift</h3>
+  <h4>在陣列最前面取出一個元素</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob'];
+  names.shift()              //names = ['Sam', 'Bob']
+  </code></pre>
+  <h3>4、unshift</h3>
+  <h4>在陣列最前面增加一個元素</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob'];
+  names.unshift('Chris')          //names = ['Chris', 'John', 'Sam', 'Bob']
+  </code></pre>
+  <h3>※在效能上，push與pop的方法運行的比較快，而shift與unshift比較慢，在於後者重新編排索引值index。</h3>
+  <h3>5、reverse()</h3>
+  <h4>方法顛倒陣列中元素的順序</h4>
+  <pre><code class="javascript">
+  let AA = [1, 2, 3, 4, 5];
+  AA.reverse();                       //AA = [5, 4, 3, 2, 1]
+  </code></pre>
+  <h3>6、delete</h3>
+  <h4>通過鍵值key來移除對應的值</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob'];
+  delete names[1]            //names = ['John', , 'Bob']
+  </code></pre>
+  <h3>7、splice()</h3>
+  <h4>改變陣列內容，移除或新增元素</h4>
+  <pre><code class="javascript">
+  let myFish = ["angel", "clown", "mandarin", "surgeon"];
+
+  //從第三個索引開始，刪除0個元素，新增元素"drum"
+  myFish.splice(2, 0, "drum");                           //myFish = ["angel", "clown", "drum", "mandarin", "surgeon"];
+  //從第四個索引開始，刪除1個元素
+  myFish.splice(3, 1);                                   //myFish = ["angel", "clown", "drum", "surgeon"];
+  //從第三個索引開始，刪除1個元素，新增元素"trumpet"
+  myFish.splice(2, 1, "trumpet");                        //myFish = ["angel", "clown", "trumpet", "surgeon"];
+  //從第一個索引開始，刪除2個元素，新增元素"parrot", "anemone", "blue"
+  myFish.splice(0, 2, "parrot", "anemone", "blue");      //myFish = ["parrot", "anemone", "blue", "trumpet", "surgeon"]
+  //負向索引從陣列末尾計算位置
+  let AA = [1, 2, 5];
+  AA.splice(-1, 0, 3, 4);                                //AA = [1,2,3,4,5]
+  </code></pre>
+  <h3>8、slice()</h3>
+  <h4>從所有元素的"start"複製到"end"(不包括"end")返回一個新的陣列</h4>
+  <pre><code class="javascript">
+  let AA = "test";
+  let BB = ["t", "e", "s", "t"];
+  AA.slice(1, 3);     //es
+  BB.slice(1, 3);     //e,s
+  AA.slice(-2);       //st
+  BB.slice(-2);       //s,t
+  </code></pre>
+  <h3>9、sort()</h3>
+  <h4>根據字符串Unicode碼點，對陣列元素進行排列</h4>
+  <pre><code class="javascript">
+  let AA = [5, 9, 1, 3, 2, 6];
+  //第一種寫法
+  AA.sort();                 //AA = [1, 2, 3, 5, 6, 9];
+  //第二種寫法
+  AA.sort(function (a,b) {
+  return a - b;              //AA = [1, 2, 3, 5, 6, 9];
+  })
+  //反過來排序
+  AA.sort(function (a,b) {
+  return b - a;              //AA = [9, 6, 5, 3, 2, 1];
+  })
+  </code></pre>
+  <h4>遇到的問題</h4>
+  <pre><code class="javascript">
+  let BB = [1, 2, 15];
+  BB.sort();                                     //BB = [1, 15, 2]
+
+  //處理
+  function compareNumeric(a, b) {
+  if (a > b) return 1;
+  if (a == b) return 0;
+  if (a < b) return -1; }
+  let CC = [ 1, 2, 15 ];
+  CC.sort(compareNumeric);                       //CC = [1, 2, 15]
+
+  //比较函数可以返回任何数字
+  let DD = [ 1, 2, 15 ];
+  DD.sort(function(a, b) { return a - b; });     //DD = [1, 2, 15]
+  
+  //箭头函数最好
+  DD.sort( (a, b) => a - b );
+  </code></pre>
+  <h3>10、concat()</h3>
+  <h4>將兩個陣列合併產生新的陣列，原陣列不改變 (不常用)</h4>
+  <pre><code class="javascript">
+  let AA = ["a", "b", "c"];
+  let BB = [1, 2, 3];
+  CC = AA.concat(BB);                //CC = ["a", "b", "c", 1, 2, 3]
+  </code></pre>
+  <h3>11、find()</h3>
+  <h4>返回陣列中滿足提供的測試函數的第一個元素的值。否則返回undefined。</h4>
+  <pre><code class="javascript">
+  let AA = [5, 12, 8, 130, 44];
+  let BB = AA.find(function(item, index, array){
+    return element > 10;
+  });           
+  //BB = 12
+  </code></pre>
+  <ul>
+    <li>item 是元素。</li>
+    <li>index 是它的索引。</li>
+    <li>array 是数组本身。</li>
+  </ul>
+  <pre><code class="javascript">
+  let users = [
+    {id: 1, name: "John"},
+    {id: 2, name: "Pete"},
+    {id: 3, name: "Mary"}
+  ];
+  let user = users.find(item => item.id == 1);          
+  //user = John
+  </code></pre>
+  <h3>12、some()</h3>
+  <h4>目標元素只要有一個元素為true，就返回：true</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Tom'];
+  let AA = names.some(function(item, index, array){
+    return item == "Sam" ? true : false;
+  });           
+  //AA = true
+  </code></pre>
+  <h3>13、every()</h3>
+  <h4>目標元素全部元素為true，才返回：true</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Tom'];
+  let BB = names.every(function(item, index, array){
+    return item.length > 2;
+  });           
+  //BB = true
+  </code></pre>
+  <h3>14、filter()</h3>
+  <h4>透過過濾條件返回一個新陣列</h4>
+  <pre><code class="javascript">
+  let words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+  let AA = words.filter(function(item, index, array){
+    return item.length > 6;
+  });           
+  //AA = ["exuberant", "destruction", "present"]
+
+
+  //範例二(試試新的寫法)
+  let users = [
+  {id: 1, name: "John"},
+  {id: 2, name: "Pete"},
+  {id: 3, name: "Mary"}
+  ];
+  // 返回前两个用户的数组
+  let someUsers = users.filter(item => item.id < 3);
+  //someUsers = 2
+  </code></pre>
+  <h3>15、map()</h3>
+  <h4>透過過濾條件返回一個新陣列</h4>
+  <pre><code class="javascript">
+  let DD = [1, 2, 3, 4, 5, 6];
+  let EE = DD.map(function (item, index, array) {
+  return item * 2;
+  });
+  //EE = [2, 4, 6, 8, 10, 12]
+
+  
+  //範例二(試試新的寫法)
+  let lengths = ["Bilbo", "Gandalf", "Nazgul"].map(item => item.length)
+  //lengths = [5, 7, 6]
+  </code></pre>
+  <h3>15、forEach()</h3>
+  <h4>對數組的每個元素執行一次提供的函數。</h4>
+  <pre><code class="javascript">
+  ["Bilbo", "Gandalf", "Nazgul"].forEach((item, index, array) => {
+  console.log(`${item} is at index ${index} in ${array}`);
+  });
+  </code></pre>
+  <h2>四、資料轉換</h2>
+  <h3>1、將字串或輸入參數組成陣列：Array.from</h3>
+  <h4>(1)類似陣列物件(參數)建立一個陣列實體</h4>
+  <pre><code class="javascript">
+  let args1 = Array.from(1, 2, 3);                       //args1 = [1, 2, 3]
+  </code></pre>
+  <h4>(2)字串既是類似陣列和可迭代的</h4>
+  <pre><code class="javascript">
+  let args2 = Array.from("abcd");                        //args2 = ["a", "b", "c", "d"]
+  </code></pre>
+  <h4>(3)任何可迭代的對象</h4>
+  <pre><code class="javascript">
+  let args3 = new Set(["AAAA", document]);
+  Array.from(args3);                                     //args3 = ["foo", document]
+  </code></pre>
+  <h4>(4)Map</h4>
+  <pre><code class="javascript">
+  let args4 = new Map([[1, 2], [2, 4], [4, 8]]);
+  Array.from(args4);                                     //args4 = [[1, 2], [2, 4], [4, 8]]
+  </code></pre>
+  <h4>(5)使用箭頭函數作為Map函數操縱元素</h4>
+  <pre><code class="javascript">
+  let args5 = Array.from([1, 2, 3], x => x + x);         //args5 = [2, 4, 6]
+  </code></pre>
+  <h4>(6)生成一系列數字</h4>
+  <pre><code class="javascript">
+  let args6 = Array.from({length:5}, (v, k) => k);       //args6 = [0, 1, 2, 3, 4]
+  </code></pre>
+  <h3>2、join()</h3>
+  <h4>元素與元素間用「指定符號」隔開串成字串</h4>
+  <pre><code class="javascript">
+  let names = ['John', 'Sam', 'Bob', 'Kelly', 'Ken'];
+  names.join('、')           //John、Sam、Bob、Kelly、Ken
+  names.join('-')            //John-Sam-Bob-Kelly-Ken
+  names.join('')             //JohnSamBobKellyKen
+  </code></pre>
+  <h3>3、split()</h3>
+  <h4>字串用「指定符號」隔開生成陣列</h4>
+  <pre><code class="javascript">
+  let names = 'Bilbo, Gandalf, Nazgul';
+  let AA = names.split(', ');          //AA = ["Bilbo", "Gandalf", "Nazgul"]
+
+  let names2 = 'Bilbo, Gandalf, Nazgul, Saruman';
+  let BB = names2.split(', ', 2);      //BB = ["Bilbo", "Gandalf"]
+
+  let str = "test";
+  str.split('')                        //str = [t, e, s, t]
+  </code></pre>
+  <h2>五、練習題目</h2>
+  <h3>題目1：運用循環創建陣列</h3>
+  <h4>創建內有0、2、4、6、8、10之元素陣列</h4>
+  <pre><code class="javascript">
+  let num = [];
+  for(let i = 0; i < 6; i++){
+    num[i] = i * 2                   //num = [0, 2, 4, 6, 8, 10]
+  }
+  </code></pre>
+  <h3>題目2：寫一個函式功能為「文字1-文字2-文字3」轉換成小駝峰式</h3>
+  <h4>將 border-left-width 轉換成 borderLeftWidth</h4>
+  <pre><code class="javascript">
+  function camelize(str) {
+    return str
+    .split('-')                                                                  // my-long-word -> ['my', 'long', 'word']
+    .map(
+    (word, index) => index == 0 ? word : word[0].toUpperCase() + word.slice(1)   //['my', 'long', 'word'] -> ['my', 'Long', 'Word']
+    ) 
+    .join('');                                                                   //['my', 'Long', 'Word'] -> myLongWord
+  };
+  camelize("border-left-width");                                                 //borderLeftWidth
+  </code></pre>
+  <h3>題目3：寫一個函式可獲取陣列在a與b數值之間的元素</h3>
+  <h4>找到的元素生成一個新的陣列，不可修改原陣列</h4>
+  <pre><code class="javascript">
+  function filterRange(arr, a, b) {
+  return arr.filter(item => (a <= item && item <=b)); 
+  }
+  let AA = [5, 3, 8, 1 ,9 ,2 ,7 ,6 ,0];
+  let filtered = filterRange(AA, 1, 4);     //filtered = [3, 1, 2]
+  </code></pre>
+  <h3>題目4：寫一個函式可獲取陣列在a與b之間數值以外的元素刪除</h3>
+  <h4>修改原陣列</h4>
+  <pre><code class="javascript">
+  function filterRangeInPlace(arr, a, b) {
+    for (let i = 0; i < arr.length; i++) {
+      let val=arr[i];
+      //如果超出間隔時刪除
+      if (val < a || val> b) {
+        arr.splice(i, 1);
+        i--;
+      }
+    }
+  }
+  let AA = [5, 3, 8, 1 ,9 ,2 ,7 ,6 ,0];
+  filterRangeInPlace(AA, 1, 4);             //AA = [3, 1, 2]
+  </code></pre>
+  <h3>題目5：倒序</h3>
+  <pre><code class="javascript">
+  let AA = [5, 2, 1, -10, 8];
+  AA.sort((a, b) => b - a);                 //AA = [8, 5, 2, 1, -10]
+  </code></pre>
+  <h3>題目6：寫一個函式為獲取陣列並且成經過排序</h3>
+  <h4>生成一個新的陣列，不可修改原陣列</h4>
+  <pre><code class="javascript">
+  function copySorted(arr) {
+    return arr.slice().sort();
+  }
+  let AA = ["HTML", "JavaScript", "CSS"];
+  let sorted = copySorted(AA);              //sorted = ["CSS", "HTML", "JavaScript"]
+  </code></pre>
+  <h3>題目7：將現有的資料處理成目標資料</h3>
+  <pre><code class="javascript">
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Pete", age: 30 };
+  let mary = { name: "Mary", age: 28 };
+  let users = [ john, pete, mary ];
+  </code></pre>
+  <h4>集合所有name生成陣列</h4>
+  <pre><code class="javascript">
+  let names = users.map(item => item.name); //names = ["John", "Pete", "Mary"]
+  </code></pre>
+  <h3>題目8：將現有的資料處理成目標資料</h3>
+  <pre><code class="javascript">
+  let john = { name: "John", surname: "Smith", id: 1 };
+  let pete = { name: "Pete", surname: "Hunt", id: 2 };
+  let mary = { name: "Mary", surname: "Key", id: 3 };
+  let users = [ john, pete, mary ];
+  </code></pre>
+  <h4>合併name與surname並生成陣列</h4>
+  <pre><code class="javascript">
+  let usersMapped = users.map(user => ({
+    fullName: `${user.name} ${user.surname}`,
+    id: user.id
+  }));
+
+  /*
+  usersMapped = [
+  { fullName: "John Smith", id: 1 },
+  { fullName: "Pete Hunt", id: 2 },
+  { fullName: "Mary Key", id: 3 }
+  ]
+  */
+  </code></pre>
+  <h3>題目9：排序對象</h3>
+  <h4>寫一函式獲得目標陣列property的屬性名稱並對它進行排序</h4>
+  <pre><code class="javascript">
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Peter", age: 30 };
+  let mary = { name: "Mary", age: 28 };
+  let people = [ john, peter, mary ];
+
+  function sortByName(arr) {
+    arr.sort((a, b) => a.name > b.name);
+  }
+
+  sortByName(people);                  //people = [john, mary, peter]
+  </code></pre>
+  <h3>題目10：隨機排序</h3>
+  <pre><code class="javascript">
+  let AA = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1)); // r 從 0 到 i 的隨機索引
+    [array[i], array[j]] = [array[j], array[i]]; // 交換元素
+    }
+  }
+
+  shuffle(AA);
+  </code></pre>
+  <h3>題目11：寫一函式獲得目標陣列對內部數值平均</h3>
+  <pre><code class="javascript">
+  let john = { name: "John", age: 25 };
+  let pete = { name: "Peter", age: 30 };
+  let mary = { name: "Mary", age: 29 };
+  let people = [ john, peter, mary ];
+
+  function getAverageAge(users) {
+    return users.reduce((prev, user) => prev + user.age, 0) / users.length;
+  }
+
+  getAverageAge(people);               //28
+  </code></pre>
+  <h3>題目12：去除陣列內重複得元素</h3>
+  <pre><code class="javascript">
+  let strings = ["Hare", "Krishna", "Hare", "Krishna", "Krishna", "Krishna", "Hare", "Hare", "Sam" ];
+
+  function unique(arr) {
+    let result = [];
+    for (let str of arr) {
+      if (!result.includes(str)) {
+        result.push(str);
+      }
+    }
+    return result;
+  }
+
+  AA = unique(strings);               //AA = ["Hare", "Krishna", "Sam"]
+  </code></pre>
+</body>
+
+</html>
